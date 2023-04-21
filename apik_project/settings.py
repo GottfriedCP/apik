@@ -27,6 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool, default=False)
 
 ALLOWED_HOSTS = ['apik.prasetyadi.name', ]
+CSRF_TRUSTED_ORIGINS = ['https://apik.prasetyadi.name', ]
 
 
 # Application definition
