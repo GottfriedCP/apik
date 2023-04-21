@@ -1,0 +1,45 @@
+{% extends 'apik/BASE.html' %}
+{% load static %}
+
+{% block body_bl %}
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="div-form" style="margin-top: 25vh;">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="idusername" class="form-label">NIK</label>
+                    <input name="nik" type="text" class="form-control" id="idusername" autofocus required>
+                </div>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Kata Sandi</label>
+                    <input name="password" type="password" class="form-control" id="passwordInput" required>
+                </div>
+                <div>
+                    Login sebagai
+                    <div class="form-check">
+                        <input value="ibu" class="form-check-input" type="radio" name="peran" id="flexRadioDefault1" checked required>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Ibu
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input value="bidan" class="form-check-input" type="radio" name="peran" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Bidan
+                        </label>
+                    </div>
+                </div>
+                {% if err_msg %}
+                <div class="my-3">
+                    <p style="color: red;">{{ err_msg }}</p>
+                </div>
+                {% endif %}
+                <div class="d-grid gap-2 my-3">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

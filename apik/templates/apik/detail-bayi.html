@@ -1,0 +1,147 @@
+{% extends 'apik/BASE.html' %}
+{% load static %}
+
+{% block body_bl %}
+<div class="container">
+    <a role="button" class="btn btn-secondary btn-sm my-3" href="{% url 'apik:index' %}">
+        <i class="bi bi-arrow-left"></i> Ke laman daftar balita
+    </a>
+    <div>
+        <table class="table table-borderless table-sm" style="max-width: 480px;">
+            <tr>
+                <td>NIK</td>
+                <td>:</td>
+                <td>{{ balita.nik|default:'-' }}</td>
+            </tr>
+            <tr>
+                <td>Nama balita</td>
+                <td>:</td>
+                <td>{{ balita.nama }}</td>
+            </tr>
+            <tr>
+                <td>Tanggal lahir / usia</td>
+                <td>:</td>
+                <td>{{ balita.tanggal_lahir|date:'d M Y' }} / {{ balita.get_usia_bulan }} bulan</td>
+            </tr>
+            <tr>
+                <td>Nama ibu</td>
+                <td>:</td>
+                <td>{{ balita.ibu }}</td>
+            </tr>
+            <tr>
+                <td>NIK ibu</td>
+                <td>:</td>
+                <td>{{ balita.ibu.nik|default:'-' }}</td>
+            </tr>
+            {% if balita.bidans.exists %}
+            <tr>
+                <td>Bidan ditugaskan</td>
+                <td>:</td>
+                <td>
+                    {% for bidan in balita.bidans.all %}
+                        {{ bidan }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+    <div class="mt-5">
+        <h3>Imunisasi yang pernah diberikan</h3>
+        {% if balita.imunisasi_diberikan.exists %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nama imunisasi</th>
+                    <th scope="col">Tanggal diberikan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for imun_d in balita.imunisasi_diberikan.all %}
+                <tr>
+                    <td>{{ imun_d.imunisasi }}</td>
+                    <td>{{ imun_d.tanggal_pemberian|date:'d M Y' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        Tidak ada data / belum pernah imunisasi
+        {% endif %}
+    </div>
+    <div class="mt-5">
+        <h3>Imunisasi yang bisa diberikan</h3>
+        {% if eligible_imuns %}
+        <div class="accordion" id="accordionFlushExample">
+            {% for imun_e in eligible_imuns %}
+            <div class="accordion-item">
+                <h5 class="accordion-header" id="flush-heading-{{ forloop.counter }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse-{{ forloop.counter }}">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><b>{{ forloop.counter }}</b></td>
+                                <td>Nama imunisasi: {{ imun_e }}</td>
+                                <td>Syarat usia (bulan): {{ imun_e.syarat_usia }}</td>
+                            </tr>
+                        </table>
+                    </button>
+                </h5>
+                <div id="flush-collapse-{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading-{{ forloop.counter }}">
+                    <div class="accordion-body">
+                        {% if user_is_bidan %}
+                        <form method="POST" action="{% url 'apik:tambah_imunisasi' %}" class="row" onsubmit='return confirm("Simpan tanggal pemberian {{ imun_e }}?");'>
+                            {% csrf_token %}
+                            <input type="hidden" name="bayi_id" value="{{ balita.id }}">
+                            <input type="hidden" name="imun_id" value="{{ imun_e.id }}">
+                            <div class="col-auto">
+                                <label for="inputTanggal" class="col-form-label">Diberikan tanggal:</label>
+                            </div>
+                            <div class="col-auto">
+                                <input id="inputTanggal" type="text" class="form-control input-tanggal" name="tanggal">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+                        {% endif %}
+                        <dl class="mt-3">
+                            <dt>Manfaat:</dt>
+                            <dd>{{ imun_e.manfaat|default:'-' }}</dd>
+
+                            <dt>Jika tidak diimunisasi:</dt>
+                            <dd>{{ imun_e.jika_tidak|default:'-' }}</dd>
+
+                            <dt>Penyakit yang dicegah:</dt>
+                            <dd>
+                                {% for penyakit in imun_e.penyakits.all %}
+                                - {{ penyakit }}<br>
+                                <img height="320px" src="{{ penyakit.ilustrasi.url }}"><br>
+                                {% endfor %}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        Belum ada imunisasi untuk usia anak saat ini
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block body_add_bl %}
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".input-tanggal").datepicker({
+            dateFormat: "dd-mm-yy",
+            dayNamesMin: ["Mg", "Sn", "Sl", "Rb", "Km", "Jm", "Sb"],
+            monthNames: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"]
+        });
+    });
+</script>
+{% endblock %}
