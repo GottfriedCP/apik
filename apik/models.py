@@ -97,6 +97,9 @@ class Imunisasi(models.Model):
 class ImunisasiDiberikan(models.Model):
     """Model perantara m2m bayi dan imunisasi."""
     tanggal_pemberian = models.DateField()
+    # bidan yg menginput
+    bidan = models.ForeignKey(
+        to='Bidan', on_delete=models.SET_NULL, null=True, related_name='imunisasi_dilakukan')
     bayi = models.ForeignKey(
         to='Bayi', on_delete=models.CASCADE, related_name='imunisasi_diberikan')
     imunisasi = models.ForeignKey(
@@ -104,7 +107,7 @@ class ImunisasiDiberikan(models.Model):
 
     def __str__(self):
         return f'{self.tanggal_pemberian} {self.imunisasi} - {self.bayi}'
-    
+
     class Meta:
         verbose_name_plural = 'imunisasi diberikan'
         ordering = ('tanggal_pemberian', )
@@ -113,7 +116,8 @@ class ImunisasiDiberikan(models.Model):
 class Penyakit(models.Model):
     nama_penyakit = models.CharField(max_length=255)
     # file will be uploaded to MEDIA_ROOT/path
-    ilustrasi = models.ImageField(upload_to="ilustrasi_penyakit/", blank=True, null=True)
+    ilustrasi = models.ImageField(
+        upload_to="ilustrasi_penyakit/", blank=True, null=True)
     deskripsi = models.TextField(null=True, blank=True)
 
     def __str__(self):

@@ -21,7 +21,7 @@
             <tr>
                 <td>Tanggal lahir / usia</td>
                 <td>:</td>
-                <td>{{ balita.tanggal_lahir|date:'d M Y' }} / {{ balita.get_usia_bulan }} bulan</td>
+                <td>{{ balita.tanggal_lahir|date:'d F Y' }} / {{ balita.get_usia_bulan }} bulan</td>
             </tr>
             <tr>
                 <td>Nama ibu</td>
@@ -54,6 +54,7 @@
                 <tr>
                     <th scope="col">Nama imunisasi</th>
                     <th scope="col">Tanggal diberikan</th>
+                    <th scope="col">Bidan/staf</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,6 +62,7 @@
                 <tr>
                     <td>{{ imun_d.imunisasi }}</td>
                     <td>{{ imun_d.tanggal_pemberian|date:'d M Y' }}</td>
+                    <td>{{ imun_d.bidan }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -98,7 +100,7 @@
                                 <label for="inputTanggal" class="col-form-label">Diberikan tanggal:</label>
                             </div>
                             <div class="col-auto">
-                                <input id="inputTanggal" type="text" class="form-control input-tanggal" name="tanggal">
+                                <input id="inputTanggal" type="text" class="form-control input-tanggal" name="tanggal" placeholder="dd-mm-yyyy">
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-primary">Simpan</button>

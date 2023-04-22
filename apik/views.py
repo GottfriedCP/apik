@@ -120,11 +120,14 @@ def tambah_imunisasi(request):
         imun_id = int(request.POST['imun_id'])
         tanggal_input = request.POST['tanggal']
         tanggal = datetime.datetime.strptime(tanggal_input, "%d-%m-%Y")
+        nik_bidan = request.session['apik_nik']
 
         bayi = Bayi.objects.get(pk=bayi_id)
         imunisasi = Imunisasi.objects.get(pk=imun_id)
-        # imun_d = ImunisasiDiberikan.objects.create(imunisasi=imunisasi, tanggal_pemberian=tanggal)
-        imunisasi.bayis.add(bayi, through_defaults={
-                            'tanggal_pemberian': tanggal})
+        through_defaults = {
+            'tanggal_pemberian': tanggal,
+            'bidan': Bidan.objects.get(nik=nik_bidan),
+        }
+        imunisasi.bayis.add(bayi, through_defaults=through_defaults)
 
         return redirect('apik:bayi_detail', bayi_id)
