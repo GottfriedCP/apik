@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from decouple import config
+from decouple import config, Csv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool, default=False)
 
-ALLOWED_HOSTS = ['apik.prasetyadi.name', ]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 CSRF_TRUSTED_ORIGINS = ['https://apik.prasetyadi.name', ]
 
 
