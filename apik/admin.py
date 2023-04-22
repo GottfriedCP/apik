@@ -5,7 +5,7 @@ from .models import Ibu, Bidan, Bayi, Imunisasi, ImunisasiDiberikan, Penyakit
 
 @admin.register(Ibu)
 class IbuAdmin(admin.ModelAdmin):
-    list_display = ('nik', 'nama')
+    list_display = ('nik', 'nama', 'alamat')
 
 
 @admin.register(Bidan)
@@ -15,12 +15,12 @@ class BidanAdmin(admin.ModelAdmin):
 
 @admin.register(Bayi)
 class BayiAdmin(admin.ModelAdmin):
-    list_display = ('nik', 'nama', 'tanggal_lahir', 'ibu')
+    list_display = ('nik', 'nama', 'tanggal_lahir', 'ibu', 'alamat')
 
 
 @admin.register(Imunisasi)
 class ImunisasiAdmin(admin.ModelAdmin):
-    list_display = ('nama_imunisasi', 'syarat_usia')
+    list_display = ('nama_imunisasi', 'syarat_usia', 'manfaat')
 
 
 @admin.register(ImunisasiDiberikan)

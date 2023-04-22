@@ -54,7 +54,8 @@ class Bayi(models.Model):
         return self.nama
 
     class Meta:
-        verbose_name_plural = 'bayi'
+        verbose_name = 'balita'
+        verbose_name_plural = 'balita'
 
     def get_usia_bulan(self):
         # today = datetime.date.today()
@@ -101,6 +102,9 @@ class ImunisasiDiberikan(models.Model):
     imunisasi = models.ForeignKey(
         to='Imunisasi', on_delete=models.SET_NULL, null=True, related_name='bayi_diberikan')
 
+    def __str__(self):
+        return f'{self.tanggal_pemberian} {self.imunisasi} - {self.bayi}'
+    
     class Meta:
         verbose_name_plural = 'imunisasi diberikan'
         ordering = ('tanggal_pemberian', )
