@@ -109,7 +109,8 @@ class ImunisasiDiberikan(models.Model):
         return f'{self.tanggal_pemberian} {self.imunisasi} - {self.bayi}'
 
     class Meta:
-        verbose_name_plural = 'imunisasi diberikan'
+        verbose_name = 'imunisasi-balita'
+        verbose_name_plural = 'imunisasi-balita'
         ordering = ('tanggal_pemberian', )
 
 
