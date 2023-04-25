@@ -3,8 +3,11 @@
 
 {% block body_bl %}
 <div class="container">
+    <div class="d-flex justify-content-center" style="margin-top: 10vh;">
+        <img class="mb-5" src="{% static 'apik/img/APIK-logo.png' %}">
+    </div>
     <div class="d-flex justify-content-center">
-        <div class="div-form" style="margin-top: 25vh;">
+        <div class="div-form">
             <form method="POST" action="">
                 {% csrf_token %}
                 <div class="mb-3">
