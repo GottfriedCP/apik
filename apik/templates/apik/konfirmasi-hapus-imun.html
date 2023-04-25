@@ -1,0 +1,36 @@
+{% extends 'apik/BASE.html' %}
+{% load static %}
+
+{% block body_bl %}
+<div class="container">
+    <h2>Konfirmasi hapus data</h2>
+    <p class="mb-3">Yakin ingin hapus data pemberian imunisasi di bawah ini?</p>
+    <dl>
+        <dt>Nama imunisasi</dt>
+        <dd>{{ imun_d.imunisasi }}</dd>
+
+        <dt>Diberikan kepada anak a.n.</dt>
+        <dd>{{ imun_d.bayi }}</dd>
+
+        <dt>Tanggal pemberian</dt>
+        <dd>{{ imun_d.tanggal_pemberian|date:'d F Y' }}</dd>
+
+        <dt>Bidan/staf pencatat</dt>
+        <dd>{{ imun_d.bidan }}</dd>
+    </dl>
+    <form method="POST" action="{% url 'apik:hapus_imun_d' %}">
+        {% csrf_token %}
+        <input type="hidden" name="imun_d_id" value="{{ imun_d.pk }}">
+        <div class="d-flex flex-wrap">
+            <button type="submit" class="btn btn-danger">Hapus</button>
+            <div>
+                <a class="btn btn-secondary ms-3" role="button" href="{% url 'apik:bayi_detail' imun_d.bayi.pk %}">Kembali</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block body_add_bl %}
+
+{% endblock %}

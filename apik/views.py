@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Bayi, Bidan, Ibu, Imunisasi
+from .models import Bayi, Bidan, Ibu, Imunisasi, ImunisasiDiberikan
 
 import datetime
 
@@ -131,3 +131,27 @@ def tambah_imunisasi(request):
         imunisasi.bayis.add(bayi, through_defaults=through_defaults)
 
         return redirect('apik:bayi_detail', bayi_id)
+
+
+@login_required
+def konfirmasi_hapus_imun_d(request):
+    """Konfirmasi ke pengguna sebelum hapus data imun diberikan. POST"""
+    if request.method == 'POST':
+        imun_d_id = request.POST.get('imun_d_id', 'unknown')
+        imun_d = get_object_or_404(ImunisasiDiberikan, pk=imun_d_id)
+
+        return render(request, 'apik/konfirmasi-hapus-imun.html', {
+            'imun_d': imun_d,
+        })
+
+
+@login_required
+def hapus_imun_d(request):
+    """Hapus data imunisasi yg diberikan ke seorang bayi. POST"""
+    if request.method == 'POST':
+        imun_d_id = request.POST.get('imun_d_id', 'unknown')
+        imun_d = get_object_or_404(ImunisasiDiberikan, pk=imun_d_id)
+        bayi = imun_d.bayi
+        imun_d.delete()
+
+        return redirect('apik:bayi_detail', bayi_id=bayi.pk)

@@ -55,6 +55,9 @@
                     <th scope="col">Nama imunisasi</th>
                     <th scope="col">Tanggal diberikan</th>
                     <th scope="col">Bidan/staf</th>
+                    {% if user_is_bidan %}
+                    <th scope="col">Tindakan</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -63,6 +66,15 @@
                     <td>{{ imun_d.imunisasi }}</td>
                     <td>{{ imun_d.tanggal_pemberian|date:'d M Y' }}</td>
                     <td>{{ imun_d.bidan }}</td>
+                    {% if user_is_bidan %}
+                    <td>
+                        <form method="POST" action="{% url 'apik:konfirmasi_hapus_imun_d' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="imun_d_id" value="{{ imun_d.pk }}">
+                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
+                    </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
@@ -82,9 +94,9 @@
                         data-bs-target="#flush-collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse-{{ forloop.counter }}">
                         <table class="table table-borderless">
                             <tr>
-                                <td><b>{{ forloop.counter }}</b></td>
-                                <td>Nama imunisasi: {{ imun_e }}</td>
-                                <td>Syarat usia (bulan): {{ imun_e.syarat_usia }}</td>
+                                <td style="width: 36px;"><b>{{ forloop.counter }}</b></td>
+                                <td style="width: 640px;"><b>{{ imun_e }}</b></td>
+                                <td>Syarat usia (bulan): <b>{{ imun_e.syarat_usia }}</b></td>
                             </tr>
                         </table>
                     </button>
@@ -92,7 +104,7 @@
                 <div id="flush-collapse-{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading-{{ forloop.counter }}">
                     <div class="accordion-body">
                         {% if user_is_bidan %}
-                        <form method="POST" action="{% url 'apik:tambah_imunisasi' %}" class="row" onsubmit='return confirm("Simpan tanggal pemberian {{ imun_e }}?");'>
+                        <form method="POST" action="{% url 'apik:tambah_imunisasi' %}" class="row" onsubmit='return confirm("Simpan tanggal pemberian untuk {{ imun_e }}?");'>
                             {% csrf_token %}
                             <input type="hidden" name="bayi_id" value="{{ balita.id }}">
                             <input type="hidden" name="imun_id" value="{{ imun_e.id }}">
