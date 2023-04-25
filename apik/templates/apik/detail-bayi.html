@@ -86,6 +86,8 @@
     <div class="mt-5">
         <h3>Imunisasi yang bisa diberikan</h3>
         {% if eligible_imuns %}
+        <p>Usia anak a.n. {{ balita.nama }} sudah memenuhi syarat untuk {{ eligible_imuns.count }} imunisasi sebagai berikut:</p>
+        <p>(urutan berdasarkan syarat usia)</p>
         <div class="accordion" id="accordionFlushExample">
             {% for imun_e in eligible_imuns %}
             <div class="accordion-item">
