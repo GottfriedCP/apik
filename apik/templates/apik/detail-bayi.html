@@ -96,7 +96,7 @@
                         data-bs-target="#flush-collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse-{{ forloop.counter }}">
                         <table class="table table-borderless">
                             <tr>
-                                <td style="width: 36px;"><b>{{ forloop.counter }}</b></td>
+                                <td style="width: 36px;"><b>({{ forloop.counter }})</b></td>
                                 <td style="width: 640px;"><b>{{ imun_e }}</b></td>
                                 <td>Syarat usia (bulan): <b>{{ imun_e.syarat_usia }}</b></td>
                             </tr>
@@ -131,8 +131,9 @@
                             <dt>Penyakit yang dicegah:</dt>
                             <dd>
                                 {% for penyakit in imun_e.penyakits.all %}
-                                - {{ penyakit }}<br>
+                                {{ forloop.counter }}. {{ penyakit }}<br>
                                 {% if penyakit.ilustrasi %}
+                                Ilustrasi {{ penyakit }}:<br>
                                 <img style="max-width: 85vw;" height="320px" src="{{ penyakit.ilustrasi.url }}"><br>
                                 {% endif %}
                                 {% endfor %}
