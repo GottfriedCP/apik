@@ -133,7 +133,7 @@
                                 {% for penyakit in imun_e.penyakits.all %}
                                 - {{ penyakit }}<br>
                                 {% if penyakit.ilustrasi %}
-                                <img height="320px" src="{{ penyakit.ilustrasi.url }}"><br>
+                                <img style="max-width: 85vw;" height="320px" src="{{ penyakit.ilustrasi.url }}"><br>
                                 {% endif %}
                                 {% endfor %}
                             </dd>
