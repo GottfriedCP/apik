@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Bayi, Bidan, Ibu, Imunisasi, ImunisasiDiberikan
@@ -11,13 +12,17 @@ import datetime
 def index(request):
     ibu = False
     bidan = False
+    try:
+        nik_session = request.session['apik_nik']
+    except KeyError:
+        return HttpResponseForbidden('Mohon logout dahulu via situs Administrasi APIK.')
     balitas = Bayi.objects.select_related('ibu').prefetch_related('bidans')
     if request.user.groups.filter(name='ibu').exists():
-        ibu = Ibu.objects.get(nik=request.session['apik_nik'])
+        ibu = Ibu.objects.get(nik=nik_session)
         balitas = balitas.filter(ibu=ibu)
     else:
         # berarti bidan.
-        bidan = Bidan.objects.get(nik=request.session['apik_nik'])
+        bidan = Bidan.objects.get(nik=nik_session)
         balitas = balitas.all()
 
     eligible_imuns_count_list = []
