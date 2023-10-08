@@ -74,7 +74,7 @@ class Imunisasi(models.Model):
     """Model repr imunisasi dengan nomor urut dosis, misal Polio I atau DPT-HB II."""
     help_text_nama_imunisasi = 'lengkap dengan nomor urut dosis'
     help_text_syarat_usia = 'dalam bulan'
-    help_text_maksimum_usia = 'dalam bulan'
+    help_text_maksimum_usia = 'dalam bulan. Hapus dan kosongkan jika tidak ada.'
     help_text_penyakit = 'Imunisasi ini mencegah penyakit apa saja?'
 
     nama_imunisasi = models.CharField(
