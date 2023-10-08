@@ -119,6 +119,9 @@
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
+                            {% if imun_e.maksimum_usia and balita.get_usia_bulan >= imun_e.maksimum_usia %}
+                            <p class="mt-3 text-danger">PERINGATAN: Usia balita ini ({{ balita.get_usia_bulan }} bulan) lebih dari atau sama dengan maksimum usia imunisasi {{ imun_e }} ({{ imun_e.maksimum_usia }} bulan)</p>
+                            {% endif %}
                         </form>
                         {% endif %}
                         <dl class="mt-3">

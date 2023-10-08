@@ -74,12 +74,14 @@ class Imunisasi(models.Model):
     """Model repr imunisasi dengan nomor urut dosis, misal Polio I atau DPT-HB II."""
     help_text_nama_imunisasi = 'lengkap dengan nomor urut dosis'
     help_text_syarat_usia = 'dalam bulan'
+    help_text_maksimum_usia = 'dalam bulan'
     help_text_penyakit = 'Imunisasi ini mencegah penyakit apa saja?'
 
     nama_imunisasi = models.CharField(
         max_length=255, unique=True, help_text=help_text_nama_imunisasi)
     syarat_usia = models.IntegerField(
         verbose_name='Syarat usia', default=1, help_text=help_text_syarat_usia)
+    maksimum_usia = models.IntegerField(blank=True, null=True, help_text=help_text_maksimum_usia)
     manfaat = models.TextField(null=True, blank=True)
     jika_tidak = models.TextField(null=True, blank=True)
     penyakits = models.ManyToManyField(
