@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from .filter import AgeFilter
 from .models import Ibu, Bidan, Bayi, Imunisasi, ImunisasiDiberikan, Penyakit
 
 
@@ -16,6 +17,7 @@ class BidanAdmin(admin.ModelAdmin):
 @admin.register(Bayi)
 class BayiAdmin(admin.ModelAdmin):
     list_display = ('nik', 'nama', 'tanggal_lahir', 'ibu', 'alamat')
+    list_filter = (AgeFilter, )
 
 
 @admin.register(Imunisasi)
