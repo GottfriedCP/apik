@@ -15,6 +15,11 @@
         <dd>{{ bidan.nama }}<br>NIK: {{ bidan.nik }}<br>STRB: {{ bidan.str|default:'-' }}</dd>
         {% endif %}
     </dl>
+    {% if ibu %}
+    <div class="my-3 alert alert-info">
+        Mohon Bapak/Ibu berkenan mengisi <a href="https://bit.ly/SuveiKepuasanMasyarakat_APIK_Payung" target="_blank">survey kepuasan layanan APIK</a>. Abaikan jika sudah pernah mengisi.
+    </div>
+    {% endif %}
     <div class="mt-5">
         <table id="datatable" class="table">
             <thead>
@@ -73,6 +78,23 @@
                 orderable: false
             }]
         });
+        {% if ibu %}
+        /*Swal.fire({
+            //title: "Are you sure?",
+            text: `Apakah Bapak/Ibu bersedia 
+            mengisi survey kepuasan layanan APIK?`,
+            footer: `Abaikan jika sudah pernah mengisi`,
+            icon: "question",
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Ya, isi sekarang",
+            cancelButtonText: `Tidak`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "https://www.google.com";
+            }
+        });*/
+        {% endif %}
     });
 </script>
 {% endblock %}
