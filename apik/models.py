@@ -100,7 +100,7 @@ class ImunisasiDiberikan(models.Model):
     """Model perantara m2m bayi dan imunisasi."""
     tanggal_pemberian = models.DateField()
     # jam pencatatan utk melengkapi tanggal setelah ada permintaan dari manusia2 aneh
-    jam_pencatatan = models.TimeField(null=True, verbose_name='jam pencatatan (WIB)')
+    jam_pencatatan = models.TimeField(null=True, blank=True, verbose_name='jam pencatatan (WIB)')
     # bidan yg menginput
     bidan = models.ForeignKey(
         to='Bidan', on_delete=models.SET_NULL, null=True, related_name='imunisasi_dilakukan')
