@@ -25,21 +25,37 @@
     <style>
         .c-navbar {
             /* position: fixed;
-            top: 0; */
+                top: 0; */
             background-color: #087428;
             margin-bottom: 10px;
         }
-
+    
         .c-navbar a {
             color: white;
             padding: 10px 15px;
             text-decoration: none;
         }
-
+    
         .c-navbar a:hover {
             background-color: white;
         }
-
+    
+        /* floating Whatsapp click-to-chat button */
+        .float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 2.5rem;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+        }
+        /* END floating Whatsapp click-to-chat button */
     </style>
 </head>
 
@@ -55,6 +71,13 @@
             Puskesmas Payung
         </div>
     </div>
+    {% if ibu %}
+    <!-- Floating Whatsapp button -->
+    <a href="https://wa.me/{{ random_wa_number }}"
+        class="float" target="_blank">
+        <i class="bi bi-whatsapp my-float"></i>
+    </a>
+    {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"

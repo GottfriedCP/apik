@@ -29,13 +29,19 @@ class Bidan(models.Model):
     str_help_text = 'Surat Tanda Registrasi bidan - jika ada'
     str = models.CharField(verbose_name='STR', max_length=255,
                            default='0', help_text=str_help_text)
-    nomor_telepon = models.CharField(max_length=15, null=True, blank=True)
+    nomor_telepon = models.CharField(max_length=15, null=True, blank=True, help_text="format 08XXXXXX...")
 
     class Meta:
         verbose_name_plural = 'bidan'
 
     def __str__(self):
         return self.nama
+    
+    def get_whatsapp_number(self):
+        # ganti 08XX.. menjadi 628XX..
+        if self.nomor_telepon:
+            return str(self.nomor_telepon).replace('0', '62', 1)
+        return ""
 
 
 class Bayi(models.Model):

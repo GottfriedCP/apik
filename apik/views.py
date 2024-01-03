@@ -2,8 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils import timezone
 
+from .helpers import get_random_bidan_wa_number
 from .models import Bayi, Bidan, Ibu, Imunisasi, ImunisasiDiberikan
 
 import datetime
@@ -43,6 +43,7 @@ def index(request):
             "ibu": ibu,
             "bidan": bidan,
             "balitas": balitas,
+            "random_wa_number": get_random_bidan_wa_number(),
         },
     )
 
@@ -114,13 +115,16 @@ def bayi_detail(request, bayi_id):
     eligible_imuns = Imunisasi.objects.filter(syarat_usia__lte=balita.get_usia_bulan())
     eligible_imuns = eligible_imuns.exclude(bayis__in=(balita,))
 
+    user_is_bidan = request.user.groups.filter(name="bidan").exists()
     return render(
         request,
         "apik/detail-bayi.html",
         {
             "balita": balita,
             "eligible_imuns": eligible_imuns,
-            "user_is_bidan": request.user.groups.filter(name="bidan").exists(),
+            "user_is_bidan": user_is_bidan,
+            "ibu": not user_is_bidan,
+            "random_wa_number": get_random_bidan_wa_number(),
         },
     )
 
