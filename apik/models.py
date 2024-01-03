@@ -99,6 +99,8 @@ class Imunisasi(models.Model):
 class ImunisasiDiberikan(models.Model):
     """Model perantara m2m bayi dan imunisasi."""
     tanggal_pemberian = models.DateField()
+    # jam pencatatan utk melengkapi tanggal setelah ada permintaan dari manusia2 aneh
+    jam_pencatatan = models.TimeField(null=True, verbose_name='jam pencatatan (WIB)')
     # bidan yg menginput
     bidan = models.ForeignKey(
         to='Bidan', on_delete=models.SET_NULL, null=True, related_name='imunisasi_dilakukan')
@@ -109,11 +111,17 @@ class ImunisasiDiberikan(models.Model):
 
     def __str__(self):
         return f'{self.tanggal_pemberian} {self.imunisasi} - {self.bayi}'
+    
+    def save(self, *args, **kwargs):
+        if self.jam_pencatatan is None:
+            # lihat juga fungsi view tambah_imunisasi
+            self.jam_pencatatan = datetime.datetime.now()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'imunisasi-balita'
         verbose_name_plural = 'imunisasi-balita'
-        ordering = ('tanggal_pemberian', )
+        ordering = ('-tanggal_pemberian', 'jam_pencatatan')
 
 
 class Penyakit(models.Model):

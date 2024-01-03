@@ -27,7 +27,7 @@ class ImunisasiAdmin(admin.ModelAdmin):
 
 @admin.register(ImunisasiDiberikan)
 class ImunisasiDiberikanAdmin(admin.ModelAdmin):
-    list_display = ('bayi', 'imunisasi', 'tanggal_pemberian', 'bidan')
+    list_display = ('bayi', 'imunisasi', 'tanggal_pemberian', 'jam_pencatatan', 'bidan')
 
 
 @admin.register(Penyakit)
