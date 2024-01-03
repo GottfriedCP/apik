@@ -29,6 +29,7 @@ class Bidan(models.Model):
     str_help_text = 'Surat Tanda Registrasi bidan - jika ada'
     str = models.CharField(verbose_name='STR', max_length=255,
                            default='0', help_text=str_help_text)
+    nomor_telepon = models.CharField(max_length=15, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'bidan'
