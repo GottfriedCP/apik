@@ -11,6 +11,6 @@ class AgeFilter(admin.SimpleListFilter):
         return (("lte5", "Di bawah 5 tahun"),)
 
     def queryset(self, request, queryset):
-        if self.value() == "<=59":
+        if self.value() == "lte5":
             date_59_months_ago = timezone.now().date() - relativedelta(months=59)
             return queryset.filter(tanggal_lahir__gte=date_59_months_ago)
