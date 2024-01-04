@@ -33,6 +33,18 @@
                 <td>:</td>
                 <td>{{ balita.ibu.nik|default:'-' }}</td>
             </tr>
+            {% if user_is_bidan %}
+            <tr>
+                <td>Nomor telepon ibu</td>
+                <td>:</td>
+                <td>
+                    {% if balita.ibu.get_whatsapp_number %}
+                    <a target="_blank" href="https://wa.me/{{ balita.ibu.get_whatsapp_number }}">Klik untuk menghubungi via Whatsapp</a>
+                    {% else %}-
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
             {% if balita.bidans.exists %}
             <tr>
                 <td>Bidan ditugaskan</td>
