@@ -76,7 +76,7 @@
                 {% for imun_d in balita.imunisasi_diberikan.all %}
                 <tr>
                     <td>{{ imun_d.imunisasi }}</td>
-                    <td>{{ imun_d.tanggal_pemberian|date:'d M Y' }}</td>
+                    <td>{{ imun_d.tanggal_pemberian|date:'d M Y' }} {{ imun_d.jam_pencatatan|default:'' }}</td>
                     <td>{{ imun_d.bidan }}</td>
                     {% if user_is_bidan %}
                     <td>
