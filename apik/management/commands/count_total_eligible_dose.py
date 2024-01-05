@@ -24,8 +24,14 @@ class Command(BaseCommand):
             eligible_imuns = Imunisasi.objects.filter(
                 syarat_usia__lte=balita.get_usia_bulan()
             )
+            #{% if imun_e.maksimum_usia and balita.get_usia_bulan >= imun_e.maksimum_usia %}
             eligible_imuns = eligible_imuns.exclude(bayis__in=(balita,))
-            eligible_imuns_count += eligible_imuns.count()
+            for eligible_imun in eligible_imuns:
+                if eligible_imun.maksimum_usia:
+                    if balita.get_usia_bulan() < eligible_imun.maksimum_usia:
+                        eligible_imuns_count += 1
+                else:
+                    eligible_imuns_count += 1
 
         try:
             with open(eligible_imuns_count_file, "w") as txtfile:
