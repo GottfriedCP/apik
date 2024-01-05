@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils import timezone
 
 from dateutil.relativedelta import relativedelta
@@ -19,19 +20,10 @@ def get_random_bidan_wa_number():
 
 
 def get_eligible_imuns_count():
-    """Hitung total dosis imunisasi yang bisa diberikan."""
-    # exclude anak di atas 5 tahun
-    date_59_months_ago = timezone.now().date() - relativedelta(months=59)
-    balitas = Bayi.objects.filter(tanggal_lahir__gte=date_59_months_ago)
-
-    eligible_imuns_count = 0
-
-    for balita in balitas:
-        # imunisasi yg bisa diberikan ke anak ini
-        eligible_imuns = Imunisasi.objects.filter(
-            syarat_usia__lte=balita.get_usia_bulan()
-        )
-        eligible_imuns = eligible_imuns.exclude(bayis__in=(balita,))
-        eligible_imuns_count += eligible_imuns.count()
-
-    return eligible_imuns_count
+    """baca total dosis imunisasi yang bisa diberikan dari file."""
+    eligible_imuns_count_file = settings.BASE_DIR / "eligible_imuns_count.txt"
+    try:
+        with open(eligible_imuns_count_file, "r") as txtfile:
+            return txtfile.read()
+    except:
+        return 0
