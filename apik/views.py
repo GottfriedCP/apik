@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .helpers import get_random_bidan_wa_number
+from .helpers import get_random_bidan_wa_number, get_eligible_imuns_count
 from .models import Bayi, Bidan, Ibu, Imunisasi, ImunisasiDiberikan
 
 import datetime
@@ -44,6 +44,8 @@ def index(request):
             "bidan": bidan,
             "balitas": balitas,
             "random_wa_number": get_random_bidan_wa_number(),
+            # get jml total dosis imunisasi yg bisa diberikan
+            "eligible_imuns_count": get_eligible_imuns_count(),
         },
     )
 

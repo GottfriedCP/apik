@@ -3,6 +3,14 @@
 
 {% block body_bl %}
 <div class="container">
+    {% if bidan %}
+    <div class="card ms-3 my-4" style="width: 23rem;">
+        <div class="card-body">
+            <h5 class="card-title">Dosis imunisasi dapat diberikan</h5>
+            <p class="card-text" style="font-size: 300%;">{{ eligible_imuns_count }}</p>
+        </div>
+    </div>
+    {% endif %}
     <h1>Daftar Anak</h1>
     <dl>
         {% if ibu %}
@@ -31,7 +39,7 @@
                         <th scope="col">Nama ibu</th>
                         <th scope="col">Alamat</th>
                         <th scope="col">Imunisasi terakhir</th>
-                        <th scope="col">Jumlah imunisasi bisa diberikan</th>
+                        <th scope="col">Jumlah imunisasi dapat diberikan</th>
                         <th scope="col">Tindakan</th>
                     </tr>
                 </thead>
