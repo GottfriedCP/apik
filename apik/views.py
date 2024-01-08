@@ -2,6 +2,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+
+from dateutil.relativedelta import relativedelta
 
 from .helpers import get_random_bidan_wa_number, get_eligible_imuns_count
 from .models import Bayi, Bidan, Ibu, Imunisasi, ImunisasiDiberikan
@@ -25,6 +28,9 @@ def index(request):
         # berarti bidan.
         bidan = Bidan.objects.get(nik=nik_session)
         balitas = balitas.all()
+        # exclude anak di atas 5 tahun
+        date_59_months_ago = timezone.now().date() - relativedelta(months=59)
+        balitas = balitas.filter(tanggal_lahir__gte=date_59_months_ago)
 
     eligible_imuns_count_list = []
     for balita in balitas:
