@@ -22,19 +22,23 @@ def index(request):
         return HttpResponseForbidden("Mohon logout dahulu via situs Administrasi APIK.")
     balitas = Bayi.objects.select_related("ibu").prefetch_related("bidans")
     if request.user.groups.filter(name="ibu").exists():
+        # user adalah ibu
         ibu = Ibu.objects.get(nik=nik_session)
         balitas = balitas.filter(ibu=ibu)
     else:
-        # berarti bidan.
+        # user adalah bidan
         bidan = Bidan.objects.get(nik=nik_session)
         balitas = balitas.all()
         # exclude anak di atas 5 tahun
         date_59_months_ago = timezone.now().date() - relativedelta(months=59)
         balitas = balitas.filter(tanggal_lahir__gte=date_59_months_ago)
 
+    jumlah_balita = balitas.count()
+
     eligible_imuns_count_list = []
+    imunisasis = Imunisasi.objects.prefetch_related("bayis")
     for balita in balitas:
-        imunisasis = Imunisasi.objects.prefetch_related("bayis")
+        #imunisasis = Imunisasi.objects.prefetch_related("bayis")
         # list imunisasi yang belum diberikan
         eligible_imuns = imunisasis.exclude(bayis__in=(balita,))
         # list imunisasi yang memenuhi syarat usia dari query above
@@ -52,6 +56,7 @@ def index(request):
             "random_wa_number": get_random_bidan_wa_number(),
             # get jml total dosis imunisasi yg bisa diberikan
             "eligible_imuns_count": get_eligible_imuns_count(),
+            "jumlah_balita": jumlah_balita,
         },
     )
 
