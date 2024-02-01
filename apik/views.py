@@ -66,8 +66,8 @@ def login_view(request):
         return redirect("apik:index")
 
     err_msg = False
-    PASSWORD_IBU = "nkrikeren"
-    PASSWORD_BIDAN = "nkrikeren2023"
+    PASSWORD_IBU = "123"
+    PASSWORD_BIDAN = "payung"
     if request.method == "POST":
         peran = request.POST.get("peran", False)
         if peran in ("bidan", "ibu"):
