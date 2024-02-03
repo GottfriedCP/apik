@@ -54,7 +54,7 @@
                 <tbody>
                     {% for balita, eligible_imuns_count in balitas %}
                         <tr>
-                            <td>{{ balita.nama }}</td>
+                            <td><a href="{% url 'apik:bayi_detail' balita.pk %}">{{ balita.nama }}</a></td>
                             <td>{{ balita.tanggal_lahir|date:'Y-m-d' }}</td>
                             <td>{{ balita.get_usia_bulan }}</td>
                             <td>{{ balita.ibu.nama }}</td>
