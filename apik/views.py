@@ -137,7 +137,7 @@ def bayi_detail(request, bayi_id):
             "eligible_imuns": eligible_imuns,
             "user_is_bidan": user_is_bidan,
             "ibu": not user_is_bidan,
-            "random_wa_number": get_random_bidan_wa_number(),
+            "random_wa_number": get_random_bidan_wa_number(balita),
         },
     )
 
