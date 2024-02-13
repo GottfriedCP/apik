@@ -10,7 +10,7 @@ from random import choice
 
 def get_random_bidan_wa_number(balita: Bayi = None):
     nomor = ""
-    if balita.bidans.count() > 0:
+    if balita and balita.bidans.count() > 0:
         nomor = balita.bidans.first().get_whatsapp_number()
     else:
         pks = Bidan.objects.values_list("pk", flat=True)
