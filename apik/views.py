@@ -38,7 +38,7 @@ def index(request):
     eligible_imuns_count_list = []
     imunisasis = Imunisasi.objects.prefetch_related("bayis")
     for balita in balitas:
-        #imunisasis = Imunisasi.objects.prefetch_related("bayis")
+        # imunisasis = Imunisasi.objects.prefetch_related("bayis")
         # list imunisasi yang belum diberikan
         eligible_imuns = imunisasis.exclude(bayis__in=(balita,))
         # list imunisasi yang memenuhi syarat usia dari query above
@@ -53,7 +53,7 @@ def index(request):
             "ibu": ibu,
             "bidan": bidan,
             "balitas": balitas,
-            "random_wa_number": get_random_bidan_wa_number(),
+            "random_wa_number": get_random_bidan_wa_number(ibu=ibu),
             # get jml total dosis imunisasi yg bisa diberikan
             "eligible_imuns_count": get_eligible_imuns_count(),
             "jumlah_balita": jumlah_balita,
@@ -137,7 +137,7 @@ def bayi_detail(request, bayi_id):
             "eligible_imuns": eligible_imuns,
             "user_is_bidan": user_is_bidan,
             "ibu": not user_is_bidan,
-            "random_wa_number": get_random_bidan_wa_number(balita),
+            "random_wa_number": get_random_bidan_wa_number(balita=balita),
         },
     )
 
