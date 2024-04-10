@@ -59,43 +59,6 @@
         </table>
     </div>
     <div class="mt-5">
-        <h3>Imunisasi yang pernah diberikan</h3>
-        {% if balita.imunisasi_diberikan.exists %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Nama imunisasi</th>
-                    <th scope="col">Tanggal diberikan</th>
-                    <th scope="col">Bidan/staf</th>
-                    {% if user_is_bidan %}
-                    <th scope="col">Tindakan</th>
-                    {% endif %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for imun_d in balita.imunisasi_diberikan.all %}
-                <tr>
-                    <td>{{ imun_d.imunisasi }}</td>
-                    <td>{{ imun_d.tanggal_pemberian|date:'d M Y' }} {{ imun_d.jam_pencatatan|default:'' }}</td>
-                    <td>{{ imun_d.bidan }}</td>
-                    {% if user_is_bidan %}
-                    <td>
-                        <form method="POST" action="{% url 'apik:konfirmasi_hapus_imun_d' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="imun_d_id" value="{{ imun_d.pk }}">
-                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                        </form>
-                    </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        Tidak ada data / belum pernah imunisasi
-        {% endif %}
-    </div>
-    <div class="mt-5">
         <h3>Imunisasi yang bisa diberikan</h3>
         {% if eligible_imuns %}
         <p>Usia anak a.n. {{ balita.nama }} sudah memenuhi syarat untuk {{ eligible_imuns.count }} imunisasi sebagai berikut:</p>
@@ -161,6 +124,43 @@
         </div>
         {% else %}
         Belum ada imunisasi tersedia untuk usia anak saat ini
+        {% endif %}
+    </div>
+    <div class="mt-5">
+        <h3>Imunisasi yang pernah diberikan</h3>
+        {% if balita.imunisasi_diberikan.exists %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nama imunisasi</th>
+                    <th scope="col">Tanggal diberikan</th>
+                    <th scope="col">Bidan/staf</th>
+                    {% if user_is_bidan %}
+                    <th scope="col">Tindakan</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for imun_d in balita.imunisasi_diberikan.all %}
+                <tr>
+                    <td>{{ imun_d.imunisasi }}</td>
+                    <td>{{ imun_d.tanggal_pemberian|date:'d M Y' }} {{ imun_d.jam_pencatatan|default:'' }}</td>
+                    <td>{{ imun_d.bidan }}</td>
+                    {% if user_is_bidan %}
+                    <td>
+                        <form method="POST" action="{% url 'apik:konfirmasi_hapus_imun_d' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="imun_d_id" value="{{ imun_d.pk }}">
+                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        Tidak ada data / belum pernah imunisasi
         {% endif %}
     </div>
 </div>
