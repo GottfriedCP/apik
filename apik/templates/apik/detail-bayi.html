@@ -135,6 +135,8 @@
                     <th scope="col">Nama imunisasi</th>
                     <th scope="col">Tanggal diberikan</th>
                     <th scope="col">Bidan/staf</th>
+                    <th scope="col">Manfaat</th>
+                    <th scope="col">Jika tidak diimunisasi</th>
                     {% if user_is_bidan %}
                     <th scope="col">Tindakan</th>
                     {% endif %}
@@ -146,6 +148,8 @@
                     <td>{{ imun_d.imunisasi }}</td>
                     <td>{{ imun_d.tanggal_pemberian|date:'d M Y' }} {{ imun_d.jam_pencatatan|default:'' }}</td>
                     <td>{{ imun_d.bidan }}</td>
+                    <td>{{ imun_d.imunisasi.manfaat|default:'-' }}</td>
+                    <td>{{ imun_d.imunisasi.jika_tidak|default:'-' }}</td>
                     {% if user_is_bidan %}
                     <td>
                         <form method="POST" action="{% url 'apik:konfirmasi_hapus_imun_d' %}">
