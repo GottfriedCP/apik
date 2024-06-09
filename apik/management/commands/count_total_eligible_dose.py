@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
         for balita in balitas:
             # 1. imunisasi yg bisa diberikan ke anak ini
-            eligible_imuns = imunisasis.filter(syarat_usia__lte=balita.get_usia_bulan())
+            eligible_imuns = imunisasis.filter(syarat_usia__lt=balita.get_usia_bulan())
             # 2. exclude imunisasi yg sudah diberikan ke anak ini
             # {% if imun_e.maksimum_usia and balita.get_usia_bulan >= imun_e.maksimum_usia %}
             eligible_imuns = eligible_imuns.exclude(bayis__in=(balita,))
