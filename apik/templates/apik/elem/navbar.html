@@ -7,7 +7,12 @@
     </div>
     <div class="d-flex">
         <div>
-            <button style="color: white; text-decoration: none;" type="button" class="btn"><a href="{% static 'apik/doc/sop.pdf' %}">SOP</a></button>
+            <button style="color: white; text-decoration: none;" type="button" class="btn"><a
+                    href="{% static 'apik/doc/sop.pdf' %}">SOP</a></button>
+        </div>
+        <div>
+            <button style="color: white; text-decoration: none;" type="button" class="btn"><a
+                    href="http://bit.ly/Posttest-APIK" target="_blank">Post Test</a></button>
         </div>
         {% if request.user.is_authenticated %}
         <form method="POST" action="{% url 'apik:logout' %}">
