@@ -35,6 +35,9 @@ def get_index_table(request):
         eligible_imuns = imunisasis.exclude(bayis__in=(balita,))
         # list imunisasi yang memenuhi syarat usia dari query above
         eligible_imuns = eligible_imuns.filter(syarat_usia__lt=balita.get_usia_bulan())
+        eligible_imuns = eligible_imuns.exclude(
+            maksimum_usia__lte=balita.get_usia_bulan()
+        )
         eligible_imuns_count_list.append(eligible_imuns.count())
     balitas = zip(balitas, eligible_imuns_count_list)
 
