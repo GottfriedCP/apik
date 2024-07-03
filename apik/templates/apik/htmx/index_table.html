@@ -1,0 +1,38 @@
+<table id="datatable" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nama</th>
+            <th scope="col">Tanggal lahir</th>
+            <th scope="col">Usia (bulan)</th>
+            <th scope="col">Nama ibu</th>
+            <th scope="col">Alamat</th>
+            <th scope="col">Imunisasi terakhir</th>
+            <th scope="col">Jumlah imunisasi dapat diberikan</th>
+            <th scope="col">Tindakan</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for balita, eligible_imuns_count in balitas %}
+        <tr>
+            <td><a href="{% url 'apik:bayi_detail' balita.pk %}">{{ balita.nama }}</a></td>
+            <td>{{ balita.tanggal_lahir|date:'Y-m-d' }}</td>
+            <td>{{ balita.get_usia_bulan }}</td>
+            <td>{{ balita.ibu.nama }}</td>
+            <td>{{ balita.ibu.alamat }}</td>
+            {% if balita.imunisasi_diberikan.count > 0 %}
+            <td>{{ balita.imunisasi_diberikan.last.imunisasi }} ({{ balita.imunisasi_diberikan.last.tanggal_pemberian|date:'Y-m-d' }})</td>
+            {% else %}
+            <td>-</td>
+            {% endif %}
+            <td>{{ eligible_imuns_count }}</td>
+            <td>
+                <a href="{% url 'apik:bayi_detail' balita.pk %}" role="button" class="btn btn-primary btn-sm">Lihat
+                    detail</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    initDataTable();
+</script>
