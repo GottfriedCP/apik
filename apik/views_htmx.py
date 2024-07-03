@@ -48,8 +48,6 @@ def get_index_table(request):
 
 
 def get_eligible_imuns_count(request):
-    print("Hitung total dosis imunisasi yang bisa diberikan...")
-
     # exclude anak di atas 5 tahun
     date_59_months_ago = timezone.now().date() - relativedelta(months=59)
     balitas = Bayi.objects.filter(tanggal_lahir__gte=date_59_months_ago)
@@ -70,8 +68,6 @@ def get_eligible_imuns_count(request):
                     eligible_imuns_count += 1
             else:
                 eligible_imuns_count += 1
-        print(f"selesai 1 balita: eligible {eligible_imuns_count} imunisasi")
-    print(f"Total {eligible_imuns_count} dosis imunisasi bisa diberikan")
 
     return render(
         request,
