@@ -69,12 +69,13 @@ def get_eligible_imuns_count(request):
         eligible_imuns = eligible_imuns.exclude(
             maksimum_usia__lte=balita.get_usia_bulan()
         )
-        for eligible_imun in eligible_imuns:
-            if eligible_imun.maksimum_usia:
-                if balita.get_usia_bulan() < eligible_imun.maksimum_usia:
-                    eligible_imuns_count += 1
-            else:
-                eligible_imuns_count += 1
+        eligible_imuns_count += eligible_imuns.count()
+        # for eligible_imun in eligible_imuns:
+        #     if eligible_imun.maksimum_usia:
+        #         if balita.get_usia_bulan() < eligible_imun.maksimum_usia:
+        #             eligible_imuns_count += 1
+        #     else:
+        #         eligible_imuns_count += 1
 
     return render(
         request,
