@@ -47,6 +47,7 @@ def get_index_table(request):
     )
 
 
+@login_required
 def get_eligible_imuns_count(request):
     # exclude anak di atas 5 tahun
     date_59_months_ago = timezone.now().date() - relativedelta(months=59)
